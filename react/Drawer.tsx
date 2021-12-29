@@ -2,6 +2,7 @@ import React, {
   Suspense,
   useReducer,
   MouseEventHandler,
+  KeyboardEvent,
   useMemo,
   useState,
 } from 'react'
@@ -152,8 +153,13 @@ function Drawer(props: Props) {
     // target is the clicked element
     // currentTarget is the element which was attached the event (e.g. the container)
     const { target, currentTarget } = event
-
     if (isElementInsideLink(target as HTMLElement, currentTarget)) {
+      closeMenu()
+    }
+  }
+
+  const handleContainerEnter = (e: KeyboardEvent<HTMLElement>) => {
+    if(e.key === "Enter"){
       closeMenu()
     }
   }
@@ -241,6 +247,7 @@ function Drawer(props: Props) {
               <div
                 className={`${handles.childrenContainer} flex flex-grow-1`}
                 onClick={handleContainerClick}
+                onKeyUp = {handleContainerEnter}
               >
                 {shouldRenderChildren && children}
               </div>
