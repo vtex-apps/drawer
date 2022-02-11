@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Indicate the prop `text` in `"rich-text#open-drawer"`.
+
 ## [0.16.0] - 2021-06-02
 ### Added
 - `renderingStrategy` prop to control when the drawer's children should be rendered
