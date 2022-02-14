@@ -54,8 +54,10 @@ There is also a block that can be used for customizing the icon that triggers th
 },
 
 "rich-text#open-drawer": {
-  "text": "Open drawer"
-}
+  "props": {
+    "text": "Open drawer"
+  }
+} 
 
 "menu#drawer": {
   "children": [
