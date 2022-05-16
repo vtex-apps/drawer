@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `triggerType` to control the option that checks whether the trigger button will be a single action or can serve to close as well
 
 ## [0.16.1] - 2022-02-14
 
