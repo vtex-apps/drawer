@@ -45,11 +45,13 @@ type Height = '100%' | 'auto' | 'fullscreen'
 type Width = '100%' | 'auto'
 type BackdropMode = 'visible' | 'none'
 type RenderingStrategy = 'lazy' | 'eager'
+type TriggerType = 'default' | 'toggle'
 
 interface Props {
   actionIconId?: string
   dismissIconId?: string
   position: Position
+  triggerType: TriggerType
   width?: Width
   height?: Height
   slideDirection?: SlideDirection
@@ -103,6 +105,7 @@ const useMenuState = () => {
 
 const CSS_HANDLES = [
   'openIconContainer',
+  'toggleIconContainer',
   'drawer',
   'opened',
   'closed',
@@ -125,6 +128,7 @@ function Drawer(props: Props) {
     renderingStrategy = 'lazy',
     customPixelEventId,
     customPixelEventName,
+    triggerType,
   } = props
   const handles = useCssHandles(CSS_HANDLES)
   const backdropMode = useResponsiveValue(backdropModeProp)
@@ -181,18 +185,41 @@ function Drawer(props: Props) {
 
   return (
     <DrawerContextProvider value={contextValue}>
-      <div
-        onClick={openMenu}
-        role="presentation"
-        aria-hidden={isMenuOpen ? 'false' : 'true'}
-        className={`pa4 pointer ${handles.openIconContainer}`}
-      >
-        {hasTriggerBlock ? (
-          <ExtensionPoint id="drawer-trigger" />
+      {triggerType === 'toggle' ? (
+        <div className={handles.toggleIconContainer}>{!isMenuOpen ? (
+          <div
+            onClick={openMenu}
+            role="presentation"
+            aria-hidden={isMenuOpen ? 'false' : 'true'}
+            className={`pa4 pointer ${handles.openIconContainer}`}
+          >
+            {hasTriggerBlock ? (
+              <ExtensionPoint id="drawer-trigger" />
+            ) : (
+              customIcon ?? <IconMenu size={20} />
+            )}
+          </div> 
         ) : (
-          customIcon ?? <IconMenu size={20} />
+          <div className={`flex ${handles.closeIconContainer}`}>
+            <DrawerCloseButton />
+          </div>
         )}
-      </div>
+        </div>
+      ) : (
+        <div
+          onClick={openMenu}
+          role="presentation"
+          aria-hidden={isMenuOpen ? 'false' : 'true'}
+          className={`pa4 pointer ${handles.openIconContainer}`}
+        >
+          {hasTriggerBlock ? (
+            <ExtensionPoint id="drawer-trigger" />
+          ) : (
+            customIcon ?? <IconMenu size={20} />
+          )}
+        </div>
+      )}
+      
       <Portal>
         <Overlay visible={overlayVisible} onClick={closeMenu} />
         <Suspense fallback={<React.Fragment />}>
