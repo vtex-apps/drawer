@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.16.2] - 2022-06-09
+
+### Fixed
+- Removed transition from in `"Overlay"`.
+
+
 ## [0.16.1] - 2022-02-14
 
 ### Fixed
