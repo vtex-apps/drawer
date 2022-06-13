@@ -23,7 +23,6 @@ const Overlay: RefForwardingComponent<HTMLDivElement, Props> = (
       style={{
         opacity: visible ? 0.5 : 0,
         pointerEvents: visible ? 'auto' : 'none',
-        transition: 'opacity 300ms',
       }}
       className={`${applyModifiers(
         handles.overlay,
