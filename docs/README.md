@@ -129,6 +129,7 @@ The `drawer` block accepts a few props that allow you to customize it.
 | `renderingStrategy`       | `'lazy'`&#124;`'eager'`                                                  | Controls if it should render the children only when clicked (`lazy`) or as soon as the page loads (`eager`). Enabling the `eager` strategy may increase SEO performance, but the page may be rendered slower                   | `'lazy'`
 | `customPixelEventId` | `string`   | Store event ID responsible for triggering the `drawer` to automatically open itself on the interface. | `undefined`    |
 | `customPixelEventName` | `string`                                                                   | Store event name responsible for triggering the `drawer` to automatically open itself on the interface. Some examples are: `'addToCart'` and `'removeFromCart'` events. Notice that using this prop will make the drawer open in **every** event with the specified name if no `customPixelEventId` is specified. | `undefined`    |
+| `triggerType` | `'default'`&#124;`'toggle'` | If marked as `toggle`, the drawer open button will be replaced by a close button when the drawer is open | `undefined` |
 
 The `drawer-close-button` block accepts the following props to customize it:
 
@@ -160,6 +161,7 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `drawerHeader`           |
 | `drawerTriggerContainer` |
 | `openIconContainer`      |
+| `toggleIconContainer`    |
 | `closeIconContainer`     |
 | `closeIconButton`        |
 | `childrenContainer`      |
