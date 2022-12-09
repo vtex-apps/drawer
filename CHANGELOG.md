@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+### Added
+- gtm event when a user clicks on the drawer's icon for open and close interactions (vtex:drawerInteraction)
 ## [0.16.2] - 2022-06-13
 ### Fixed
 - Removed transition from in `"Overlay"`.

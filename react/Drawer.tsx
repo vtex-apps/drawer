@@ -9,7 +9,7 @@ import { defineMessages } from 'react-intl'
 import { IconMenu } from 'vtex.store-icons'
 import { useCssHandles } from 'vtex.css-handles'
 import { useChildBlock, ExtensionPoint } from 'vtex.render-runtime'
-import { usePixelEventCallback } from 'vtex.pixel-manager'
+import { usePixelEventCallback, usePixel } from 'vtex.pixel-manager'
 import { PixelData } from 'vtex.pixel-manager/react/PixelContext'
 import {
   MaybeResponsiveValue,
@@ -83,6 +83,7 @@ function menuReducer(state: MenuState, action: MenuAction) {
 }
 
 const useMenuState = () => {
+  const { push } = usePixel()
   const [state, dispatch] = useReducer(menuReducer, initialMenuState)
   const setLockScroll = useLockScroll()
 
@@ -91,8 +92,14 @@ const useMenuState = () => {
     setLockScroll(value)
   }
 
-  const openMenu = () => setMenuOpen(true)
-  const closeMenu = () => setMenuOpen(false)
+  const openMenu = () => {
+    setMenuOpen(true)
+    push({ event: 'drawerInteraction', action: 'open' })
+  }
+  const closeMenu = () => {
+    setMenuOpen(false)
+    push({ event: 'drawerInteraction', action: 'close' })
+  }
 
   return {
     state,
