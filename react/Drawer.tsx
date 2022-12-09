@@ -96,7 +96,10 @@ const useMenuState = () => {
     setMenuOpen(true)
     push({ event: 'drawerInteraction', action: 'open' })
   }
-  const closeMenu = () => {setMenuOpen(false), push({event: 'drawerInteraction', action: "close"})}
+  const closeMenu = () => {
+    setMenuOpen(false)
+    push({ event: 'drawerInteraction', action: 'close' })
+  }
 
   return {
     state,
