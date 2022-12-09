@@ -92,7 +92,10 @@ const useMenuState = () => {
     setLockScroll(value)
   }
 
-  const openMenu = () => {setMenuOpen(true), push({event: 'drawerInteraction', action: "open"})}
+  const openMenu = () => {
+    setMenuOpen(true)
+    push({ event: 'drawerInteraction', action: 'open' })
+  }
   const closeMenu = () => {setMenuOpen(false), push({event: 'drawerInteraction', action: "close"})}
 
   return {
