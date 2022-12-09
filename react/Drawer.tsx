@@ -83,7 +83,7 @@ function menuReducer(state: MenuState, action: MenuAction) {
 }
 
 const useMenuState = () => {
-  const {push}:any = usePixel()
+  const { push } = usePixel()
   const [state, dispatch] = useReducer(menuReducer, initialMenuState)
   const setLockScroll = useLockScroll()
 
