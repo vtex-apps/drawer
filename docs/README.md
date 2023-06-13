@@ -6,7 +6,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-This component allows you to have a sliding drawer for your menus, which is particularly useful for mobile layouts.
+The **Drawer** component is a sliding panel that displays additional options and menus when expanded. It is typically used in mobile layouts and responsive web designs where screen space is limited.
+
+![drawer](https://github.com/vtex-apps/reviews-and-ratings/assets/60782333/46358b77-e41a-4014-8443-c65cbe947fc2)
+
+When closed, the **Drawer** component is represented by an icon button positioned at the edge of the screen. Upon interaction, the drawer slides into view, revealing its content. Users can interact with the exposed content, perform actions, and navigate menus. To dismiss the drawer, users can either tap outside the drawer or use the close button.
 
 ## Configuring Store Drawer
 
