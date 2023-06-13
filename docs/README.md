@@ -19,7 +19,7 @@ This component allows you to have a sliding drawer for your menus, which is part
 }
 ```
 
-Add the `drawer` block to your app. The following example is from the [Store Theme](https://github.com/vtex-apps/store-theme).
+2. Add the `drawer` block to your app. The following example is from the [Store Theme](https://github.com/vtex-apps/store-theme).
 
 ```json
 "drawer": {
