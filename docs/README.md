@@ -138,9 +138,9 @@ The `drawer-close-button` block accepts the following props to customize it:
 
 | Prop name | Type                     | Description                                                                            | Default value |
 | --------- | ------------------------ | -------------------------------------------------------------------------------------- | ------------- |
-| `size`    | `number`                 | Define the size of the icon inside the button.                                         | `30`          |
-| `type`    | `'filled'`&#124;`'line'` | Define the type of the icon.                                                           | `'line'`      |
-| `text`    | `string`                 | Define the text inside the button. The icon will not be rendered if `text` is defined. | `undefined`   |
+| `size`    | `number`                 | Defines the size of the icon inside the button.                                         | `30`          |
+| `type`    | `'filled'`&#124;`'line'` | Defines the type of the icon.                                                           | `'line'`      |
+| `text`    | `string`                 | Defines the text inside the button. The icon will not be rendered if `text` is defined. | `undefined`   |
 
 The `drawer-trigger` block accepts the following prop to customize it:
 
