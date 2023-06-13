@@ -10,7 +10,8 @@ This component allows you to have a sliding drawer for your menus, which is part
 
 ## Configuring Store Drawer
 
-Add the app to your theme dependencies on the `manifest.json`. For example:
+1. Open your store theme in the code editor of your preference.
+2. Open the `manifest.json` file and add the `vtex.store-drawer` app to your store theme dependencies as in the following:
 
 ```json
 "dependencies": {
