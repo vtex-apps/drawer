@@ -6,11 +6,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-This component allows you to have a sliding drawer for your menus. This is specially handy for mobile layouts.
+This component allows you to have a sliding drawer for your menus, which is particularly useful for mobile layouts.
 
-## Configuration
+## Configuring Store Drawer
 
-Add the app to your theme's dependencies on the `manifest.json`, for example:
+Add the app to your theme dependencies on the `manifest.json`. For example:
 
 ```json
 "dependencies": {
@@ -18,7 +18,7 @@ Add the app to your theme's dependencies on the `manifest.json`, for example:
 }
 ```
 
-Then, you need to add the `drawer` block into your app. The following is an example taken from [Store Theme](https://github.com/vtex-apps/store-theme).
+Add the `drawer` block to your app. The following example is from the [Store Theme](https://github.com/vtex-apps/store-theme).
 
 ```json
 "drawer": {
@@ -39,7 +39,7 @@ Then, you need to add the `drawer` block into your app. The following is an exam
 },
 ```
 
-There is also a block that can be used for customizing the icon that triggers the opening of the drawer, it's called `"drawer-trigger"` and can be used as follows:
+To customize the icon that triggers the opening of the drawer, you can use the `drawer-trigger` block as follows:
 
 ```json
 "drawer": {
@@ -57,7 +57,7 @@ There is also a block that can be used for customizing the icon that triggers th
   "props": {
     "text": "Open drawer"
   }
-} 
+}
 
 "menu#drawer": {
   "children": [
@@ -71,8 +71,7 @@ There is also a block that can be used for customizing the icon that triggers th
 },
 ```
 
-And there is a block that enables customization of the header that contains the button which closes the drawer.
-It's called `"drawer-header"` and can be used in a similar way as `"drawer-trigger"`, here is an example:
+To customize the header containing the button that closes the drawer, you can use the `drawer-header` block similarly as the `drawer-trigger` block. For example:
 
 ```jsonc
 // inside blocks.json
@@ -91,10 +90,10 @@ It's called `"drawer-header"` and can be used in a similar way as `"drawer-trigg
 }
 ```
 
-If you're using this component by itself, you just need to import it inside the component you want to use it in. Here's an example:
+If you are using this component as a standalone module, you will need to import it into the specific component where you want to use it. For example:
 
 ```tsx
-import { Drawer, DrawerHeader, DrawerCloseButton } from 'vtex.store-drawer'
+import { Drawer, DrawerHeader, DrawerCloseButton } from "vtex.store-drawer";
 
 const Menu = () => (
   <Drawer
@@ -113,42 +112,42 @@ const Menu = () => (
       <li>Link 6</li>
     </ul>
   </Drawer>
-)
+);
 ```
 
-## Configuration
+## Customization
 
 The `drawer` block accepts a few props that allow you to customize it.
 
-| Prop name            | Type                                                                       | Description                                                                           | Default value  |
-| -------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------- |
-| `maxWidth`           | `number` or `string`                                                       | Define the open Drawer's maximum width.                                               | `450`          |
-| `isFullWidth`        | `Boolean`                                                                  | Control whether or not the open Drawer should occupy the full available width.        | `false`        |
-| `slideDirection`     | `'horizontal'`&#124;`'vertical'`&#124;`'rightToLeft'`&#124;`'leftToRight'` | Controls the opening animation's direction.                                           | `'horizontal'` |
-| `backdropMode`       | `'default'`&#124;`'none'`                                                  | Controls if it should display the backdrop when the Drawer is open                    |
-| `renderingStrategy`       | `'lazy'`&#124;`'eager'`                                                  | Controls if it should render the children only when clicked (`lazy`) or as soon as the page loads (`eager`). Enabling the `eager` strategy may increase SEO performance, but the page may be rendered slower                   | `'lazy'`
-| `customPixelEventId` | `string`   | Store event ID responsible for triggering the `drawer` to automatically open itself on the interface. | `undefined`    |
-| `customPixelEventName` | `string`                                                                   | Store event name responsible for triggering the `drawer` to automatically open itself on the interface. Some examples are: `'addToCart'` and `'removeFromCart'` events. Notice that using this prop will make the drawer open in **every** event with the specified name if no `customPixelEventId` is specified. | `undefined`    |
+| Prop name              | Type                                                                       | Description                                                                                                                                                                                                                                                                                                                              | Default value  |
+| ---------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `maxWidth`             | `number` or `string`                                                       | Defines the maximum width of the open drawer.                                                                                                                                                                                                                                                                                            | `450`          |
+| `isFullWidth`          | `boolean`                                                                  | Controls whether the open drawer should occupy the full available width.                                                                                                                                                                                                                                                                 | `false`        |
+| `slideDirection`       | `'horizontal'`&#124;`'vertical'`&#124;`'rightToLeft'`&#124;`'leftToRight'` | Controls the direction of the opening animation for the drawer.                                                                                                                                                                                                                                                                          | `'horizontal'` |
+| `backdropMode`         | `'default'`&#124;`'none'`                                                  | Controls whether the backdrop should be displayed when the drawer is open.                                                                                                                                                                                                                                                               |                |
+| `renderingStrategy`    | `'lazy'`&#124;`'eager'`                                                    | Controls the rendering strategy for the children of the drawer component. It determines whether the children should be rendered only when the drawer is clicked (`lazy`) or immediately when the page loads (`eager`).  Enabling the `eager` strategy may improve SEO performance. However, it may also result in slower page rendering. | `'lazy'`       |
+| `customPixelEventId`   | `string`                                                                   | The store event ID responsible for triggering the `drawer` to automatically open on the interface.                                                                                                                                                                                                                                       | `undefined`    |
+| `customPixelEventName` | `string`                                                                   | The store event name responsible for triggering the `drawer` to automatically open on the interface. Some examples are: `'addToCart'` and `'removeFromCart'` events. Note that if no `customPixelEventId` is set, using this prop will cause the drawer to open in every event with the specified name.                                  | `undefined`    |
 
 The `drawer-close-button` block accepts the following props to customize it:
 
-| Prop name | Type                     | Description                                   | Default value |
-| --------- | ------------------------ | --------------------------------------------- | ------------- |
-| `size`    | `Number`                 | Define the size of the icon inside the button | `30`          |
-| `type`    | `'filled'`&#124;`'line'` | Define the type of the icon                   | `'line'`      |
-| `text`    | `String`                 | Define the text inside the button. If `text` is defined, the icon will not be rendered.             | `undefined`   |
+| Prop name | Type                     | Description                                                                            | Default value |
+| --------- | ------------------------ | -------------------------------------------------------------------------------------- | ------------- |
+| `size`    | `number`                 | Define the size of the icon inside the button.                                         | `30`          |
+| `type`    | `'filled'`&#124;`'line'` | Define the type of the icon.                                                           | `'line'`      |
+| `text`    | `string`                 | Define the text inside the button. The icon will not be rendered if `text` is defined. | `undefined`   |
 
 The `drawer-trigger` block accepts the following prop to customize it:
 
-| Prop name            | Type     | Description                                                           | Default value |
-| -------------------- | -------- | --------------------------------------------------------------------- | ------------- |
+| Prop name            | Type     | Description                                                                        | Default value |
+| -------------------- | -------- | ---------------------------------------------------------------------------------- | ------------- |
 | `customPixelEventId` | `string` | Defines the event ID to be sent whenever users interact with the Drawer component. | `undefined`   |
 
 ## Customization
 
-In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
+In order to apply CSS customizations to this and other blocks, follow the instructions in [Using CSS handles for store customizations](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-css-handles-for-store-customization).
 
-| CSS Handles              |
+| CSS handles              |
 | ------------------------ |
 | `drawer`                 |
 | `opened`                 |
