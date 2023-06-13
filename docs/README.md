@@ -120,7 +120,7 @@ const Menu = () => (
 );
 ```
 
-## Customization
+### Props
 
 The `drawer` block accepts a few props that allow you to customize it.
 
