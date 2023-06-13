@@ -1,6 +1,6 @@
 📢 Use this project, [contribute](https://github.com/vtex-apps/drawer) to it or open issues to help evolve it using [Store Discussion](https://github.com/vtex-apps/store-discussion).
 
-# Store Drawer
+# Drawer
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
@@ -12,7 +12,7 @@ The **Drawer** component is a sliding panel that displays additional options and
 
 When closed, the **Drawer** component is represented by an icon button positioned at the edge of the screen. Upon interaction, the drawer slides into view, revealing its content. Users can interact with the exposed content, perform actions, and navigate menus. To dismiss the drawer, users can either tap outside the drawer or use the close button.
 
-## Configuring Store Drawer
+## Configuration
 
 1. Open your store theme in the code editor of your preference.
 2. Open the `manifest.json` file and add the `vtex.store-drawer` app to your store theme dependencies as in the following:
@@ -44,7 +44,7 @@ When closed, the **Drawer** component is represented by an icon button positione
 },
 ```
 
-To customize the icon that triggers the opening of the drawer, you can use the `drawer-trigger` block as follows:
+3. Use the `drawer-trigger` block to customize the icon that triggers the opening of the drawer as follows:
 
 ```json
 "drawer": {
@@ -76,10 +76,10 @@ To customize the icon that triggers the opening of the drawer, you can use the `
 },
 ```
 
-To customize the header containing the button that closes the drawer, you can use the `drawer-header` block similarly as the `drawer-trigger` block. For example:
+4. Use the `drawer-header` block to customize the header containing the button that closes the drawer. For example:
 
-```jsonc
-// inside blocks.json
+```json
+// blocks.json
 {
   "drawer": {
     "blocks": ["drawer-header#my-drawer"]
@@ -94,6 +94,8 @@ To customize the header containing the button that closes the drawer, you can us
   }
 }
 ```
+
+### Using the Drawer as a standalone component
 
 If you are using this component as a standalone module, you will need to import it into the specific component where you want to use it. For example:
 
@@ -122,7 +124,7 @@ const Menu = () => (
 
 ### Props
 
-The `drawer` block accepts a few props that allow you to customize it.
+#### `drawer`
 
 | Prop name              | Type                                                                       | Description                                                                                                                                                                                                                                                                                                                              | Default value  |
 | ---------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
@@ -134,7 +136,7 @@ The `drawer` block accepts a few props that allow you to customize it.
 | `customPixelEventId`   | `string`                                                                   | Defines the store event ID responsible for triggering the `drawer` to automatically open on the interface.                                                                                                                                                                                                                                       | `undefined`    |
 | `customPixelEventName` | `string`                                                                   | Defines the store event name responsible for triggering the `drawer` to automatically open on the interface. Some examples are: `'addToCart'` and `'removeFromCart'` events. Note that if no `customPixelEventId` is set, using this prop will cause the drawer to open in every event with the specified name.                                  | `undefined`    |
 
-The `drawer-close-button` block accepts the following props to customize it:
+#### `drawer-close-button`
 
 | Prop name | Type                     | Description                                                                            | Default value |
 | --------- | ------------------------ | -------------------------------------------------------------------------------------- | ------------- |
@@ -142,7 +144,7 @@ The `drawer-close-button` block accepts the following props to customize it:
 | `type`    | `'filled'`&#124;`'line'` | Defines the type of the icon.                                                           | `'line'`      |
 | `text`    | `string`                 | Defines the text inside the button. The icon will not be rendered if `text` is defined. | `undefined`   |
 
-The `drawer-trigger` block accepts the following prop to customize it:
+#### `drawer-trigger`
 
 | Prop name            | Type     | Description                                                                        | Default value |
 | -------------------- | -------- | ---------------------------------------------------------------------------------- | ------------- |
