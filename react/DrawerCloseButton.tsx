@@ -26,7 +26,6 @@ const DrawerCloseButton: React.FC<Props> = ({
   return (
     <button
       className={`${handles.closeIconButton} pa4 pointer bg-transparent transparent bn pointer`}
-      id="closeIcon"
       aria-label={intl.formatMessage({
         id: 'store/drawer.close-button',
       })}
