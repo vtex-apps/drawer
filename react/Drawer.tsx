@@ -184,7 +184,7 @@ function Drawer(props: Props) {
       <div
         onClick={openMenu}
         role="presentation"
-        aria-hidden={!isMenuOpen ? 'false' : 'true'}
+        aria-hidden={isMenuOpen ? 'false' : 'true'}
         className={`pa4 pointer ${handles.openIconContainer}`}
       >
         {hasTriggerBlock ? (

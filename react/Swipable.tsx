@@ -465,7 +465,7 @@ export default class Swipable extends React.Component<Props> {
         }}
         className={this.props.className}
       >
-        {this.props.enabled && this.props.children}
+        {this.props.children}
       </div>
     )
   }
