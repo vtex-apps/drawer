@@ -152,7 +152,7 @@ function Drawer(props: Props) {
   })
 
   useEffect(() => {
-    if (!!onVisibilityChanged) {
+    if (onVisibilityChanged !== undefined) {
       onVisibilityChanged(isMenuOpen)
     }
   }, [onVisibilityChanged, isMenuOpen])
