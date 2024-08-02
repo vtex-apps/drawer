@@ -4,6 +4,7 @@ import React, {
   MouseEventHandler,
   useMemo,
   useState,
+  useEffect,
 } from 'react'
 import { defineMessages } from 'react-intl'
 import { IconMenu } from 'vtex.store-icons'
@@ -62,6 +63,7 @@ interface Props {
   renderingStrategy?: RenderingStrategy
   customPixelEventId?: PixelData['id']
   customPixelEventName?: PixelData['event']
+  onVisibilityChanged?: (visible: boolean) => void
 }
 
 function menuReducer(state: MenuState, action: MenuAction) {
@@ -125,6 +127,7 @@ function Drawer(props: Props) {
     renderingStrategy = 'lazy',
     customPixelEventId,
     customPixelEventName,
+    onVisibilityChanged,
   } = props
   const handles = useCssHandles(CSS_HANDLES)
   const backdropMode = useResponsiveValue(backdropModeProp)
@@ -147,6 +150,12 @@ function Drawer(props: Props) {
     handler: openMenu,
     eventName: customPixelEventName,
   })
+
+  useEffect(() => {
+    if (!!onVisibilityChanged) {
+      onVisibilityChanged(isMenuOpen)
+    }
+  }, [isMenuOpen])
 
   const handleContainerClick: MouseEventHandler<HTMLElement> = event => {
     // target is the clicked element
