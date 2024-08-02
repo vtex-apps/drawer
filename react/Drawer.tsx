@@ -155,7 +155,7 @@ function Drawer(props: Props) {
     if (!!onVisibilityChanged) {
       onVisibilityChanged(isMenuOpen)
     }
-  }, [isMenuOpen])
+  }, [onVisibilityChanged, isMenuOpen])
 
   const handleContainerClick: MouseEventHandler<HTMLElement> = event => {
     // target is the clicked element
