@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.17.2] - 2024-08-13
+
 ### Added
 
 - Add onVisibilityChanged function as a property argument of the Drawer component
