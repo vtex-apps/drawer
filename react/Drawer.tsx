@@ -62,6 +62,7 @@ interface Props {
   renderingStrategy?: RenderingStrategy
   customPixelEventId?: PixelData['id']
   customPixelEventName?: PixelData['event']
+  zIndex?: number
 }
 
 function menuReducer(state: MenuState, action: MenuAction) {
@@ -125,6 +126,7 @@ function Drawer(props: Props) {
     renderingStrategy = 'lazy',
     customPixelEventId,
     customPixelEventName,
+    zIndex = 999,
   } = props
   const handles = useCssHandles(CSS_HANDLES)
   const backdropMode = useResponsiveValue(backdropModeProp)
@@ -194,7 +196,7 @@ function Drawer(props: Props) {
         )}
       </div>
       <Portal>
-        <Overlay visible={overlayVisible} onClick={closeMenu} />
+        <Overlay visible={overlayVisible} onClick={closeMenu} zIndex={zIndex} />
         <Suspense fallback={<React.Fragment />}>
           <Swipable
             {...{
@@ -216,6 +218,7 @@ function Drawer(props: Props) {
               maxWidth,
               minWidth: 280,
               pointerEvents: isMenuOpen ? 'auto' : 'none',
+              zIndex
             }}
           >
             <div
