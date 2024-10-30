@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Add `zIndex` as a property argument to control the drawer's z-index
+
 ## [0.17.2] - 2024-08-13
 
 ### Added
