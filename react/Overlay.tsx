@@ -4,12 +4,13 @@ import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 interface Props {
   visible: boolean
   onClick(event: React.MouseEvent | React.TouchEvent): void
+  zIndex?: number
 }
 
 const CSS_HANDLES = ['overlay'] as const
 
 const Overlay: RefForwardingComponent<HTMLDivElement, Props> = (
-  { visible, onClick }: Props,
+  { visible, onClick, zIndex = 999 }: Props,
   ref
 ) => {
   const handles = useCssHandles(CSS_HANDLES)
@@ -23,6 +24,7 @@ const Overlay: RefForwardingComponent<HTMLDivElement, Props> = (
       style={{
         opacity: visible ? 0.5 : 0,
         pointerEvents: visible ? 'auto' : 'none',
+        zIndex
       }}
       className={`${applyModifiers(
         handles.overlay,
