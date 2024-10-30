@@ -227,7 +227,7 @@ function Drawer(props: Props) {
               maxWidth,
               minWidth: 280,
               pointerEvents: isMenuOpen ? 'auto' : 'none',
-              zIndex
+              zIndex,
             }}
           >
             <div

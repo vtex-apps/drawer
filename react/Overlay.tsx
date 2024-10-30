@@ -24,7 +24,7 @@ const Overlay: RefForwardingComponent<HTMLDivElement, Props> = (
       style={{
         opacity: visible ? 0.5 : 0,
         pointerEvents: visible ? 'auto' : 'none',
-        zIndex
+        zIndex,
       }}
       className={`${applyModifiers(
         handles.overlay,
