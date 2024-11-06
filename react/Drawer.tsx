@@ -23,7 +23,6 @@ import useLockScroll from './modules/useLockScroll'
 import DrawerCloseButton from './DrawerCloseButton'
 import { DrawerContextProvider } from './DrawerContext'
 import { isElementInsideLink } from './modules/isElementInsideLink'
-import Skeleton from './Skeleton'
 
 const Swipable = React.lazy(() => import('./Swipable'))
 
@@ -265,7 +264,7 @@ function Drawer(props: Props) {
                 onClick={handleContainerClick}
               >
                 {shouldRenderChildren &&
-                  (shouldRenderChildrenNow ? children : <Skeleton />)}
+                  (shouldRenderChildrenNow ? children : <></>)}
               </div>
               {/* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             </div>
