@@ -23,6 +23,7 @@ import useLockScroll from './modules/useLockScroll'
 import DrawerCloseButton from './DrawerCloseButton'
 import { DrawerContextProvider } from './DrawerContext'
 import { isElementInsideLink } from './modules/isElementInsideLink'
+import Skeleton from './Skeleton'
 
 const Swipable = React.lazy(() => import('./Swipable'))
 
@@ -138,6 +139,7 @@ function Drawer(props: Props) {
   const { state: menuState, openMenu, closeMenu } = useMenuState()
   const { isOpen: isMenuOpen, hasBeenOpened: hasMenuBeenOpened } = menuState
   const [isMoving, setIsMoving] = useState(false)
+  const [shouldRenderChildrenNow, setShouldRenderChildrenNow] = useState(false)
 
   // Always add the listener for 'openDrawer' events, since they're sent by
   // the drawer-trigger block.
@@ -158,6 +160,14 @@ function Drawer(props: Props) {
       onVisibilityChanged(isMenuOpen)
     }
   }, [onVisibilityChanged, isMenuOpen])
+
+  useEffect(() => {
+    if (isMenuOpen && !shouldRenderChildrenNow) {
+      setTimeout(() => {
+        setShouldRenderChildrenNow(true)
+      }, 0)
+    }
+  }, [isMenuOpen, shouldRenderChildrenNow])
 
   const handleContainerClick: MouseEventHandler<HTMLElement> = event => {
     // target is the clicked element
@@ -254,7 +264,8 @@ function Drawer(props: Props) {
                 className={`${handles.childrenContainer} flex flex-grow-1`}
                 onClick={handleContainerClick}
               >
-                {shouldRenderChildren && children}
+                {shouldRenderChildren &&
+                  (shouldRenderChildrenNow ? children : <Skeleton />)}
               </div>
               {/* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             </div>
