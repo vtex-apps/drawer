@@ -187,13 +187,17 @@ function Drawer(props: Props) {
   )
 
   const overlayVisible = backdropMode === 'visible' && isMenuOpen
-  
+
   useEffect(() => {
-    if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === 'eager'){
+    if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === 'eager') {
       setShouldRenderChildren(true)
     }
-  },
-  [hasMenuBeenOpened, renderingStrategy, setShouldRenderChildren, isMenuOpen])
+  },[
+    hasMenuBeenOpened,
+    renderingStrategy,
+    setShouldRenderChildren,
+    isMenuOpen
+  ])
 
   return (
     <DrawerContextProvider value={contextValue}>
