@@ -158,7 +158,7 @@ function Drawer(props: Props) {
     if (onVisibilityChanged !== undefined) {
       onVisibilityChanged(isMenuOpen)
     }
-  }, [onVisibilityChanged, isMenuOpen])  
+  }, [onVisibilityChanged, isMenuOpen])
 
   const handleContainerClick: MouseEventHandler<HTMLElement> = event => {
     // target is the clicked element
@@ -259,7 +259,7 @@ function Drawer(props: Props) {
                 className={`${handles.childrenContainer} flex flex-grow-1`}
                 onClick={handleContainerClick}
               >
-                { shouldRenderChildren ? children : <></> }
+                {shouldRenderChildren ? children : <></>}
               </div>
               {/* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             </div>
