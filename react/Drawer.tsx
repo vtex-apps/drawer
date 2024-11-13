@@ -258,7 +258,7 @@ function Drawer(props: Props) {
               <div
                 className={`${handles.childrenContainer} flex flex-grow-1`}
                 onClick={handleContainerClick}
-              >                
+              >
                 { shouldRenderChildren ? children : <></> }
               </div>
               {/* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
