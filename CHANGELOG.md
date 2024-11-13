@@ -11,10 +11,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Skeleton when opening drawer
 
-### Added
-
-- Add skeleton component (empty div) to Drawer for improve performance
-
 ## [0.18.0] - 2024-11-01
 
 ### Added
