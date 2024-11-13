@@ -192,11 +192,11 @@ function Drawer(props: Props) {
     if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === 'eager') {
       setShouldRenderChildren(true)
     }
-  },[
+  }, [
     hasMenuBeenOpened,
     renderingStrategy,
     setShouldRenderChildren,
-    isMenuOpen
+    isMenuOpen,
   ])
 
   return (
