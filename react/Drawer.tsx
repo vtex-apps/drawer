@@ -137,6 +137,9 @@ function Drawer(props: Props) {
   const hasHeaderBlock = Boolean(useChildBlock({ id: 'drawer-header' }))
   const { state: menuState, openMenu, closeMenu } = useMenuState()
   const { isOpen: isMenuOpen, hasBeenOpened: hasMenuBeenOpened } = menuState
+  const [shouldRenderChildren, setShouldRenderChildren] = useState(
+    renderingStrategy === 'eager'
+  )
   const [isMoving, setIsMoving] = useState(false)
 
   // Always add the listener for 'openDrawer' events, since they're sent by
@@ -187,8 +190,16 @@ function Drawer(props: Props) {
 
   const overlayVisible = backdropMode === 'visible' && isMenuOpen
 
-  const shouldRenderChildren =
-    renderingStrategy === 'eager' || hasMenuBeenOpened
+  useEffect(() => {
+    if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === 'eager') {
+      setShouldRenderChildren(true)
+    }
+  }, [
+    hasMenuBeenOpened,
+    renderingStrategy,
+    setShouldRenderChildren,
+    isMenuOpen,
+  ])
 
   return (
     <DrawerContextProvider value={contextValue}>
@@ -254,7 +265,7 @@ function Drawer(props: Props) {
                 className={`${handles.childrenContainer} flex flex-grow-1`}
                 onClick={handleContainerClick}
               >
-                {shouldRenderChildren && children}
+                {shouldRenderChildren ? children : <></>}
               </div>
               {/* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             </div>
