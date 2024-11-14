@@ -137,7 +137,9 @@ function Drawer(props: Props) {
   const hasHeaderBlock = Boolean(useChildBlock({ id: 'drawer-header' }))
   const { state: menuState, openMenu, closeMenu } = useMenuState()
   const { isOpen: isMenuOpen, hasBeenOpened: hasMenuBeenOpened } = menuState
-  const [shouldRenderChildren, setShouldRenderChildren] = useState(renderingStrategy === 'eager')
+  const [shouldRenderChildren, setShouldRenderChildren] = useState(
+    renderingStrategy === 'eager'
+  )
   const [isMoving, setIsMoving] = useState(false)
 
   // Always add the listener for 'openDrawer' events, since they're sent by
