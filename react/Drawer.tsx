@@ -205,7 +205,7 @@ function Drawer(props: Props) {
     <DrawerContextProvider value={contextValue}>
       <div
         onClick={openMenu}
-        role="presentation"
+        role="button"
         aria-hidden={isMenuOpen ? 'false' : 'true'}
         tabIndex={isMenuOpen ? 0 : -1}
         className={`pa4 pointer ${handles.openIconContainer}`}
