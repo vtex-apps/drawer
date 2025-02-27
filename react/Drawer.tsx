@@ -204,11 +204,17 @@ function Drawer(props: Props) {
   return (
     <DrawerContextProvider value={contextValue}>
       <div
-        onClick={openMenu}
         role="button"
         aria-hidden={isMenuOpen ? 'false' : 'true'}
-        tabIndex={isMenuOpen ? 0 : -1}
-        className={`pa4 pointer ${handles.openIconContainer}`}
+        aria-expanded={isMenuOpen} 
+        tabIndex={isMenuOpen ? 0 : -1} 
+        onClick={isMenuOpen ? openMenu : undefined}
+        onKeyDown={(e) => {
+          if (isMenuOpen && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            openMenu();
+          }
+        }}
       >
         {hasTriggerBlock ? (
           <ExtensionPoint id="drawer-trigger" />
