@@ -206,14 +206,17 @@ function Drawer(props: Props) {
       <div
         role="button"
         aria-hidden={isMenuOpen ? 'false' : 'true'}
-        aria-expanded={isMenuOpen} 
+        aria-expanded={isMenuOpen}
         aria-label={isMenuOpen ? 'close drawer' : 'open drawer'}
-        tabIndex={isMenuOpen ? 0 : -1} 
+        tabIndex={isMenuOpen ? 0 : -1}
         onClick={openMenu}
-        onKeyDown={(e) => {
-          if (isMenuOpen && (e.key === 'Enter' || e.key === ' '|| e.key === 'Escape')) {
-            e.preventDefault();
-            openMenu();
+        onKeyDown={e => {
+          if (
+            isMenuOpen &&
+            (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')
+          ) {
+            e.preventDefault()
+            openMenu()
           }
         }}
       >
