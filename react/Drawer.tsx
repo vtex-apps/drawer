@@ -11,7 +11,7 @@ import { IconMenu } from 'vtex.store-icons'
 import { useCssHandles } from 'vtex.css-handles'
 import { useChildBlock, ExtensionPoint } from 'vtex.render-runtime'
 import { usePixelEventCallback } from 'vtex.pixel-manager'
-import { PixelData } from 'vtex.pixel-manager/react/PixelContext'
+import type { PixelEventTypes } from 'vtex.pixel-manager'
 import {
   MaybeResponsiveValue,
   useResponsiveValue,
@@ -61,8 +61,8 @@ interface Props {
   header?: React.ReactElement
   backdropMode?: MaybeResponsiveValue<BackdropMode>
   renderingStrategy?: RenderingStrategy
-  customPixelEventId?: PixelData['id']
-  customPixelEventName?: PixelData['event']
+  customPixelEventId?: PixelEventTypes.PixelData['id']
+  customPixelEventName?: PixelEventTypes.PixelData['event']
   onVisibilityChanged?: (visible: boolean) => void
   zIndex?: number
 }
@@ -204,10 +204,21 @@ function Drawer(props: Props) {
   return (
     <DrawerContextProvider value={contextValue}>
       <div
-        onClick={openMenu}
-        role="presentation"
+        role="button"
         aria-hidden={isMenuOpen ? 'false' : 'true'}
-        className={`pa4 pointer ${handles.openIconContainer}`}
+        aria-expanded={isMenuOpen}
+        aria-label={isMenuOpen ? 'close drawer' : 'open drawer'}
+        tabIndex={isMenuOpen ? 0 : -1}
+        onClick={openMenu}
+        onKeyDown={e => {
+          if (
+            isMenuOpen &&
+            (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')
+          ) {
+            e.preventDefault()
+            openMenu()
+          }
+        }}
       >
         {hasTriggerBlock ? (
           <ExtensionPoint id="drawer-trigger" />
@@ -228,11 +239,9 @@ function Drawer(props: Props) {
             onUpdateOffset={value => {
               setIsMoving(!(value === '0%' || value === '-100%'))
             }}
-            className={`${handles.drawer} ${
-              isMenuOpen ? handles.opened : handles.closed
-            } ${isMoving ? handles.moving : ''} ${
-              direction === 'right' ? 'right-0' : 'left-0'
-            } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
+            className={`${handles.drawer} ${isMenuOpen ? handles.opened : handles.closed
+              } ${isMoving ? handles.moving : ''} ${direction === 'right' ? 'right-0' : 'left-0'
+              } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
             style={{
               width: width ?? (isFullWidth ? '100%' : '85%'),
               maxWidth,
