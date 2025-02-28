@@ -1,16 +1,15 @@
-import type { FunctionComponent } from "react";
-import ReactDOM from "react-dom";
-import { useSSR } from "vtex.render-runtime/react/components/NoSSR";
+import ReactDOM from 'react-dom'
+import { useSSR } from 'vtex.render-runtime/react/components/NoSSR'
 
-const Portal: FunctionComponent = ({ children }) => {
-  const body = window?.document?.body;
-  const isSSR = useSSR();
+const Portal: React.FunctionComponent = ({ children }) => {
+  const body = window?.document?.body
+  const isSSR = useSSR()
 
   if (!body || isSSR) {
-    return null;
+    return null
   }
 
-  return ReactDOM.createPortal(children, body);
-};
+  return ReactDOM.createPortal(children, body)
+}
 
-export default Portal;
+export default Portal

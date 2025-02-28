@@ -25,9 +25,11 @@ const stopConflictingAnimations = (animation: Animation) =>
   animations.filter(cur => {
     const isConflicting =
       cur.object === animation.object && cur.prop === animation.prop
+
     if (isConflicting) {
       cur.stop()
     }
+
     return !cur.isStopped()
   })
 
@@ -70,6 +72,7 @@ export function animate({
   const stop = () => {
     stopped = true
   }
+
   const isStopped = () => {
     return stopped
   }
@@ -80,8 +83,10 @@ export function animate({
   const update = (now?: number) => {
     if (stopped) return
     let timeMultiplier = 1
+
     if (last != null) {
       const deltaTime = now! - last
+
       timeMultiplier = deltaTime / frameDuration
       if (timeMultiplier > maxTimeMultiplier) timeMultiplier = maxTimeMultiplier
     }
@@ -90,12 +95,14 @@ export function animate({
 
     if (duration) {
       const step = frameDuration / (duration * 1000)
+
       current += step * timeMultiplier
       if (current >= 1) {
         current = 1
         if (onComplete != null) {
           onComplete()
         }
+
         stop()
       }
 
@@ -125,9 +132,12 @@ export function animate({
         if (onComplete != null) {
           onComplete()
         }
+
         stop()
       }
+
       const formattedValue = `${current}${unit}`
+
       object[prop] = formattedValue
 
       if (onUpdate != null) {
@@ -141,6 +151,7 @@ export function animate({
   update()
 
   const animation = createAnimation({ object, prop, stop, isStopped })
+
   stopConflictingAnimations(animation)
 
   animations.push(animation)
