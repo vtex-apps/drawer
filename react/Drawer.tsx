@@ -1,119 +1,119 @@
+import type { MouseEventHandler } from "react";
 import React, {
   Suspense,
   useReducer,
-  MouseEventHandler,
   useMemo,
   useState,
   useEffect,
-} from 'react'
-import { defineMessages } from 'react-intl'
-import { IconMenu } from 'vtex.store-icons'
-import { useCssHandles } from 'vtex.css-handles'
-import { useChildBlock, ExtensionPoint } from 'vtex.render-runtime'
-import { usePixelEventCallback } from 'vtex.pixel-manager'
-import type { PixelEventTypes } from 'vtex.pixel-manager'
-import {
-  MaybeResponsiveValue,
-  useResponsiveValue,
-} from 'vtex.responsive-values'
+} from "react";
+import { defineMessages } from "react-intl";
+import { IconMenu } from "vtex.store-icons";
+import { useCssHandles } from "vtex.css-handles";
+import { useChildBlock, ExtensionPoint } from "vtex.render-runtime";
+import type { PixelEventTypes } from "vtex.pixel-manager";
+import { usePixelEventCallback } from "vtex.pixel-manager";
+import type { MaybeResponsiveValue } from "vtex.responsive-values";
+import { useResponsiveValue } from "vtex.responsive-values";
 
-import Portal from './Portal'
-import Overlay from './Overlay'
-import useLockScroll from './modules/useLockScroll'
-import DrawerCloseButton from './DrawerCloseButton'
-import { DrawerContextProvider } from './DrawerContext'
-import { isElementInsideLink } from './modules/isElementInsideLink'
+import Portal from "./Portal";
+import Overlay from "./Overlay";
+import useLockScroll from "./modules/useLockScroll";
+import DrawerCloseButton from "./DrawerCloseButton";
+import { DrawerContextProvider } from "./DrawerContext";
+import { isElementInsideLink } from "./modules/isElementInsideLink";
 
-const Swipable = React.lazy(() => import('./Swipable'))
+const Swipable = React.lazy(() => import("./Swipable"));
 
 interface MenuState {
-  isOpen: boolean
-  hasBeenOpened: boolean
+  isOpen: boolean;
+  hasBeenOpened: boolean;
 }
 
 interface MenuAction {
-  type: 'open' | 'close'
+  type: "open" | "close";
 }
 
 const initialMenuState: MenuState = {
   isOpen: false,
   hasBeenOpened: false,
-}
+};
 
-type Position = 'left' | 'right' | 'up' | 'down'
-type SlideDirection = 'vertical' | 'horizontal' | 'rightToLeft' | 'leftToRight'
-type Height = '100%' | 'auto' | 'fullscreen'
-type Width = '100%' | 'auto'
-type BackdropMode = 'visible' | 'none'
-type RenderingStrategy = 'lazy' | 'eager'
+type Position = "left" | "right" | "up" | "down";
+type SlideDirection = "vertical" | "horizontal" | "rightToLeft" | "leftToRight";
+type Height = "100%" | "auto" | "fullscreen";
+type Width = "100%" | "auto";
+type BackdropMode = "visible" | "none";
+type RenderingStrategy = "lazy" | "eager";
 
 interface Props {
-  actionIconId?: string
-  dismissIconId?: string
-  position: Position
-  width?: Width
-  height?: Height
-  slideDirection?: SlideDirection
-  isFullWidth?: boolean
-  maxWidth?: number | string
-  children: React.ReactNode
-  customIcon?: React.ReactElement
-  header?: React.ReactElement
-  backdropMode?: MaybeResponsiveValue<BackdropMode>
-  renderingStrategy?: RenderingStrategy
-  customPixelEventId?: PixelEventTypes.PixelData['id']
-  customPixelEventName?: PixelEventTypes.PixelData['event']
-  onVisibilityChanged?: (visible: boolean) => void
-  zIndex?: number
+  actionIconId?: string;
+  dismissIconId?: string;
+  position: Position;
+  width?: Width;
+  height?: Height;
+  slideDirection?: SlideDirection;
+  isFullWidth?: boolean;
+  maxWidth?: number | string;
+  children: React.ReactNode;
+  customIcon?: React.ReactElement;
+  header?: React.ReactElement;
+  backdropMode?: MaybeResponsiveValue<BackdropMode>;
+  renderingStrategy?: RenderingStrategy;
+  customPixelEventId?: PixelEventTypes.PixelData["id"];
+  customPixelEventName?: PixelEventTypes.PixelData["event"];
+  onVisibilityChanged?: (visible: boolean) => void;
+  zIndex?: number;
 }
 
 function menuReducer(state: MenuState, action: MenuAction) {
   switch (action.type) {
-    case 'open':
+    case "open":
       return {
         ...state,
         isOpen: true,
         hasBeenOpened: true,
-      }
-    case 'close':
+      };
+
+    case "close":
       return {
         ...state,
         isOpen: false,
-      }
+      };
+
     default:
-      return state
+      return state;
   }
 }
 
 const useMenuState = () => {
-  const [state, dispatch] = useReducer(menuReducer, initialMenuState)
-  const setLockScroll = useLockScroll()
+  const [state, dispatch] = useReducer(menuReducer, initialMenuState);
+  const setLockScroll = useLockScroll();
 
   const setMenuOpen = (value: boolean) => {
-    dispatch({ type: value ? 'open' : 'close' })
-    setLockScroll(value)
-  }
+    dispatch({ type: value ? "open" : "close" });
+    setLockScroll(value);
+  };
 
-  const openMenu = () => setMenuOpen(true)
-  const closeMenu = () => setMenuOpen(false)
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
 
   return {
     state,
     openMenu,
     closeMenu,
-  }
-}
+  };
+};
 
 const CSS_HANDLES = [
-  'openIconContainer',
-  'drawer',
-  'opened',
-  'closed',
-  'moving',
-  'drawerContent',
-  'childrenContainer',
-  'closeIconContainer',
-] as const
+  "openIconContainer",
+  "drawer",
+  "opened",
+  "closed",
+  "moving",
+  "drawerContent",
+  "childrenContainer",
+  "closeIconContainer",
+] as const;
 
 function Drawer(props: Props) {
   const {
@@ -123,61 +123,63 @@ function Drawer(props: Props) {
     customIcon,
     isFullWidth,
     maxWidth = 450,
-    slideDirection = 'horizontal',
-    backdropMode: backdropModeProp = 'visible',
-    renderingStrategy = 'lazy',
+    slideDirection = "horizontal",
+    backdropMode: backdropModeProp = "visible",
+    renderingStrategy = "lazy",
     customPixelEventId,
     customPixelEventName,
     onVisibilityChanged,
     zIndex = 999,
-  } = props
-  const handles = useCssHandles(CSS_HANDLES)
-  const backdropMode = useResponsiveValue(backdropModeProp)
-  const hasTriggerBlock = Boolean(useChildBlock({ id: 'drawer-trigger' }))
-  const hasHeaderBlock = Boolean(useChildBlock({ id: 'drawer-header' }))
-  const { state: menuState, openMenu, closeMenu } = useMenuState()
-  const { isOpen: isMenuOpen, hasBeenOpened: hasMenuBeenOpened } = menuState
+  } = props;
+
+  const handles = useCssHandles(CSS_HANDLES);
+  const backdropMode = useResponsiveValue(backdropModeProp);
+  const hasTriggerBlock = Boolean(useChildBlock({ id: "drawer-trigger" }));
+  const hasHeaderBlock = Boolean(useChildBlock({ id: "drawer-header" }));
+  const { state: menuState, openMenu, closeMenu } = useMenuState();
+  const { isOpen: isMenuOpen, hasBeenOpened: hasMenuBeenOpened } = menuState;
   const [shouldRenderChildren, setShouldRenderChildren] = useState(
-    renderingStrategy === 'eager'
-  )
-  const [isMoving, setIsMoving] = useState(false)
+    renderingStrategy === "eager"
+  );
+
+  const [isMoving, setIsMoving] = useState(false);
 
   // Always add the listener for 'openDrawer' events, since they're sent by
   // the drawer-trigger block.
   usePixelEventCallback({
     eventId: customPixelEventId,
     handler: openMenu,
-    eventName: 'openDrawer',
-  })
+    eventName: "openDrawer",
+  });
 
   usePixelEventCallback({
     eventId: customPixelEventId,
     handler: openMenu,
     eventName: customPixelEventName,
-  })
+  });
 
   useEffect(() => {
     if (onVisibilityChanged !== undefined) {
-      onVisibilityChanged(isMenuOpen)
+      onVisibilityChanged(isMenuOpen);
     }
-  }, [onVisibilityChanged, isMenuOpen])
+  }, [onVisibilityChanged, isMenuOpen]);
 
-  const handleContainerClick: MouseEventHandler<HTMLElement> = event => {
+  const handleContainerClick: MouseEventHandler<HTMLElement> = (event) => {
     // target is the clicked element
     // currentTarget is the element which was attached the event (e.g. the container)
-    const { target, currentTarget } = event
+    const { target, currentTarget } = event;
 
     if (isElementInsideLink(target as HTMLElement, currentTarget)) {
-      closeMenu()
+      closeMenu();
     }
-  }
+  };
 
   const direction =
-    slideDirection === 'horizontal' || slideDirection === 'leftToRight'
-      ? 'left'
-      : 'right'
+    slideDirection === "horizontal" || slideDirection === "leftToRight"
+      ? "left"
+      : "right";
 
-  const swipeHandler = direction === 'left' ? 'onSwipeLeft' : 'onSwipeRight'
+  const swipeHandler = direction === "left" ? "onSwipeLeft" : "onSwipeRight";
 
   const contextValue = useMemo(
     () => ({
@@ -186,37 +188,37 @@ function Drawer(props: Props) {
       close: closeMenu,
     }),
     [isMenuOpen, openMenu, closeMenu]
-  )
+  );
 
-  const overlayVisible = backdropMode === 'visible' && isMenuOpen
+  const overlayVisible = backdropMode === "visible" && isMenuOpen;
 
   useEffect(() => {
-    if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === 'eager') {
-      setShouldRenderChildren(true)
+    if (isMenuOpen || hasMenuBeenOpened || renderingStrategy === "eager") {
+      setShouldRenderChildren(true);
     }
   }, [
     hasMenuBeenOpened,
     renderingStrategy,
     setShouldRenderChildren,
     isMenuOpen,
-  ])
+  ]);
 
   return (
     <DrawerContextProvider value={contextValue}>
       <div
         role="button"
-        aria-hidden={isMenuOpen ? 'false' : 'true'}
+        aria-hidden={isMenuOpen ? "false" : "true"}
         aria-expanded={isMenuOpen}
-        aria-label={isMenuOpen ? 'close drawer' : 'open drawer'}
+        aria-label={isMenuOpen ? "close drawer" : "open drawer"}
         tabIndex={isMenuOpen ? 0 : -1}
         onClick={openMenu}
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           if (
             isMenuOpen &&
-            (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')
+            (e.key === "Enter" || e.key === " " || e.key === "Escape")
           ) {
-            e.preventDefault()
-            openMenu()
+            e.preventDefault();
+            openMenu();
           }
         }}
       >
@@ -234,26 +236,28 @@ function Drawer(props: Props) {
               [swipeHandler]: closeMenu,
             }}
             enabled={isMenuOpen}
-            position={isMenuOpen ? 'center' : direction}
+            position={isMenuOpen ? "center" : direction}
             allowOutsideDrag
-            onUpdateOffset={value => {
-              setIsMoving(!(value === '0%' || value === '-100%'))
+            onUpdateOffset={(value) => {
+              setIsMoving(!(value === "0%" || value === "-100%"));
             }}
-            className={`${handles.drawer} ${isMenuOpen ? handles.opened : handles.closed
-              } ${isMoving ? handles.moving : ''} ${direction === 'right' ? 'right-0' : 'left-0'
-              } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
+            className={`${handles.drawer} ${
+              isMenuOpen ? handles.opened : handles.closed
+            } ${isMoving ? handles.moving : ""} ${
+              direction === "right" ? "right-0" : "left-0"
+            } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
             style={{
-              width: width ?? (isFullWidth ? '100%' : '85%'),
+              width: width ?? (isFullWidth ? "100%" : "85%"),
               maxWidth,
               minWidth: 280,
-              pointerEvents: isMenuOpen ? 'auto' : 'none',
+              pointerEvents: isMenuOpen ? "auto" : "none",
               zIndex,
             }}
           >
             <div
               className={`${handles.drawerContent} overflow-y-auto`}
               style={{
-                WebkitOverflowScrolling: 'touch',
+                WebkitOverflowScrolling: "touch",
               }}
             >
               {hasHeaderBlock ? (
@@ -282,18 +286,18 @@ function Drawer(props: Props) {
         </Suspense>
       </Portal>
     </DrawerContextProvider>
-  )
+  );
 }
 
 const messages = defineMessages({
   title: {
-    defaultMessage: '',
-    id: 'admin/editor.drawer.title',
+    defaultMessage: "",
+    id: "admin/editor.drawer.title",
   },
-})
+});
 
 Drawer.schema = {
   title: messages.title.id,
-}
+};
 
-export default Drawer
+export default Drawer;

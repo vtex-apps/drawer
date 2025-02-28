@@ -1,1 +1,7 @@
-"@vtex/prettier-config"
+
+{
+  "extends": ["@vtex/prettier-config"],
+  "typescript": {
+    "importType": true
+  }
+}
