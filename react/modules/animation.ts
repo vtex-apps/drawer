@@ -1,5 +1,4 @@
-import type { Measure } from './parseMeasure'
-import parseMeasure from './parseMeasure'
+import parseMeasure, { Measure } from './parseMeasure'
 
 interface Animation {
   prop: string
