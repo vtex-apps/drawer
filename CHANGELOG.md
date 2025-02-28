@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.18.2] - 2025-02-28
+
 ### Changed
 - Only show `aria` when menu is closed
 
