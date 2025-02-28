@@ -279,7 +279,6 @@ export default class Swipable extends React.Component<Props> {
 
     if (pos === null) return
 
-    // prettier-ignore-next-line
     const lastPos =
       this.previousDragPositions[this.previousDragPositions.length - 1]
 
