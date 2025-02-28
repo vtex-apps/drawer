@@ -1,4 +1,5 @@
-import parseMeasure, { Measure } from './parseMeasure'
+import type { Measure } from './parseMeasure'
+import parseMeasure from './parseMeasure'
 
 interface Animation {
   prop: string
@@ -59,7 +60,9 @@ export function animate({
   const targetFps = 60
   const frameDuration = 1000 / targetFps
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const [targetValue, targetUnit, isTargetUnitless] = parseMeasure(target)!
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const [originValue, originUnit] = parseMeasure(object[prop])!
   const unit = isTargetUnitless ? originUnit : targetUnit
   const delta = targetValue - originValue
@@ -85,6 +88,7 @@ export function animate({
     let timeMultiplier = 1
 
     if (last != null) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const deltaTime = now! - last
 
       timeMultiplier = deltaTime / frameDuration
