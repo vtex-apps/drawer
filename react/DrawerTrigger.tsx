@@ -1,30 +1,29 @@
-import React from "react";
-import type { PixelEventTypes } from "vtex.pixel-manager";
-import { usePixel } from "vtex.pixel-manager";
-import { useCssHandles } from "vtex.css-handles";
+import React from 'react'
+import { usePixel, PixelEventTypes } from 'vtex.pixel-manager'
+import { useCssHandles } from 'vtex.css-handles'
 
 interface Props {
-  customPixelEventId?: string;
+  customPixelEventId?: string
 }
 
-const CSS_HANDLES = ["drawerTriggerContainer"] as const;
+const CSS_HANDLES = ['drawerTriggerContainer'] as const
 
 const DrawerTrigger: React.FC<Props> = ({ children, customPixelEventId }) => {
-  const { push } = usePixel();
-  const handles = useCssHandles(CSS_HANDLES);
+  const { push } = usePixel()
+  const handles = useCssHandles(CSS_HANDLES)
 
   const handleInteraction = () => {
     if (!customPixelEventId) {
-      return;
+      return
     }
 
     const pixelEvent: PixelEventTypes.PixelData = {
       id: customPixelEventId,
-      event: "openDrawer",
-    };
+      event: 'openDrawer',
+    }
 
-    push(pixelEvent);
-  };
+    push(pixelEvent)
+  }
 
   return (
     <div
@@ -36,7 +35,7 @@ const DrawerTrigger: React.FC<Props> = ({ children, customPixelEventId }) => {
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default DrawerTrigger;
+export default DrawerTrigger
