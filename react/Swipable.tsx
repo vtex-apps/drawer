@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import { animate } from './modules/animation'
 import parseMeasure from './modules/parseMeasure'
@@ -11,7 +11,7 @@ const RIGHT = 'right'
 type Position = 'center' | 'left' | 'right'
 
 interface Props {
-  children: ReactElement
+  children: React.ReactElement
   onSwipeLeft: () => void
   onSwipeRight: () => void
   onTriggerChange: (
@@ -25,17 +25,17 @@ interface Props {
   onDragStart: () => void
   onDragEnd: () => void
   onSetPosition: (args: {
-    element: ReactElement | HTMLDivElement
+    element: React.ReactElement | HTMLDivElement
     offset: number | string
   }) => void
   onUpdateOffset: (offset: number | string) => void
   threshold: number
   enabled: boolean
   rubberBanding: boolean
-  element: ReactElement
+  element: React.ReactElement
   position: Position
   className: string
-  style: object
+  style: Record<string, unknown>
   positionRight: number | string
   positionLeft: number | string
   preserveMomentum: boolean
@@ -85,6 +85,7 @@ export default class Swipable extends React.Component<Props> {
       offset: number
     }) => {
       const unit = typeof offset === 'number' ? 'px' : ''
+
       element.style.transform = `translate3d(${offset}${unit},0,0)`
     },
     onUpdateOffset: () => {},
@@ -165,6 +166,7 @@ export default class Swipable extends React.Component<Props> {
       event.preventDefault()
       event.stopPropagation()
     }
+
     this.wasDragging = false
   }
 
@@ -204,10 +206,13 @@ export default class Swipable extends React.Component<Props> {
     switch (this.props.position) {
       case 'center':
         return 0
+
       case 'right':
         return this.props.positionRight
+
       case 'left':
         return this.props.positionLeft
+
       default:
         return 0
     }
@@ -226,6 +231,7 @@ export default class Swipable extends React.Component<Props> {
     }
 
     const pos = getPointerPosition(event)
+
     if (pos === null) return
 
     this.isPointerDown = true
@@ -249,6 +255,7 @@ export default class Swipable extends React.Component<Props> {
     } | null
   ) => {
     const { onTriggerChange } = this.props
+
     if (onTriggerChange) {
       onTriggerChange(willTrigger)
     }
@@ -272,9 +279,8 @@ export default class Swipable extends React.Component<Props> {
 
     if (pos === null) return
 
-    const lastPos = this.previousDragPositions[
-      this.previousDragPositions.length - 1
-    ]
+    const lastPos =
+      this.previousDragPositions[this.previousDragPositions.length - 1]
 
     if (lastPos && pos.source !== lastPos.source) {
       return
@@ -330,7 +336,7 @@ export default class Swipable extends React.Component<Props> {
   }
 
   private setOffset = (offset: number | string) => {
-    if (this.dragContainer && this.dragContainer.current) {
+    if (this.dragContainer?.current) {
       this.props.onSetPosition({
         element: this.props.element || this.dragContainer.current,
         offset,
@@ -343,14 +349,17 @@ export default class Swipable extends React.Component<Props> {
 
   private setMomentum = (momentum: number, target: number | string) => {
     const [, targetUnit] = parseMeasure(target) ?? []
+
     if (this.dragContainer.current == null) return
 
     if (targetUnit === '%') {
       const bounds = this.dragContainer.current.getBoundingClientRect()
       const { width } = bounds
+
       this.offset = `${(Number(this.offset) / width) * 100}%`
       momentum = (momentum / width) * 100
     }
+
     this.momentum = momentum
 
     /* Lets momentum live only for a brief time. If position changes in this meantime,
@@ -358,6 +367,7 @@ export default class Swipable extends React.Component<Props> {
     if (this.momentumTimeout) {
       clearTimeout(this.momentumTimeout as number)
     }
+
     this.momentumTimeout = setTimeout(() => {
       this.momentum = null
       this.momentumTimeout = null
@@ -380,9 +390,11 @@ export default class Swipable extends React.Component<Props> {
         .slice(-samples)
         .map((cur, i, arr) => {
           const last = arr[i - 1]
+
           if (last == null) {
             return null
           }
+
           return cur.x - last.x
         })
         .filter(cur => cur != null)
@@ -392,9 +404,15 @@ export default class Swipable extends React.Component<Props> {
 
     const triggers = {
       left:
-        onSwipeLeft && releaseSpeed < 0 && this.offset < -this.props.threshold,
+        onSwipeLeft != null &&
+        releaseSpeed < 0 &&
+        typeof this.offset === 'number' &&
+        this.offset < -this.props.threshold,
       right:
-        onSwipeRight && releaseSpeed > 0 && this.offset > this.props.threshold,
+        onSwipeRight != null &&
+        releaseSpeed > 0 &&
+        typeof this.offset === 'number' &&
+        this.offset > this.props.threshold,
     }
 
     if (triggers.left) {
@@ -403,12 +421,14 @@ export default class Swipable extends React.Component<Props> {
         speed: releaseSpeed,
       }
     }
+
     if (triggers.right) {
       return {
         type: RIGHT,
         speed: releaseSpeed,
       }
     }
+
     return null
   }
 
@@ -417,20 +437,25 @@ export default class Swipable extends React.Component<Props> {
       event.preventDefault()
       event.stopPropagation()
       const trigger = this.checkTrigger()
+
       if (trigger) {
         switch (trigger.type) {
           case LEFT:
             if (this.props.preserveMomentum) {
               this.setMomentum(trigger.speed, this.props.positionLeft)
             }
+
             this.props.onSwipeLeft()
             break
+
           case RIGHT:
             if (this.props.preserveMomentum) {
               this.setMomentum(trigger.speed, this.props.positionRight)
             }
+
             this.props.onSwipeRight()
             break
+
           default:
             break
         }
@@ -446,9 +471,11 @@ export default class Swipable extends React.Component<Props> {
           },
         })
       }
+
       this.props.onDragEnd()
       this.props.onUnlockScroll()
     }
+
     this.isScrolling = false
     this.wasDragging = this.isPointerDown && this.isDragging
     this.isPointerDown = false

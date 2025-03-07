@@ -1,4 +1,4 @@
-import React, { RefForwardingComponent } from 'react'
+import React from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 interface Props {
@@ -9,12 +9,13 @@ interface Props {
 
 const CSS_HANDLES = ['overlay'] as const
 
-const Overlay: RefForwardingComponent<HTMLDivElement, Props> = (
+const Overlay: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
   { visible, onClick, zIndex = 999 }: Props,
   ref
 ) => {
   const handles = useCssHandles(CSS_HANDLES)
   const ariaHidden = visible ? 'false' : 'true'
+
   return (
     <div
       ref={ref}

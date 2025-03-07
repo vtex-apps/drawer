@@ -1,8 +1,7 @@
-import { FunctionComponent } from 'react'
 import ReactDOM from 'react-dom'
-import { useSSR } from 'vtex.render-runtime'
+import { useSSR } from 'vtex.render-runtime/react/components/NoSSR'
 
-const Portal: FunctionComponent = ({ children }) => {
+const Portal: React.FunctionComponent = ({ children }) => {
   const body = window?.document?.body
   const isSSR = useSSR()
 

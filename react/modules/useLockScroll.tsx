@@ -8,6 +8,7 @@ const useLockScroll = () => {
     if (locked) {
       prevScroll.current = document.body.style.overflow
     }
+
     document.body.style.overflow = locked ? 'hidden' : prevScroll.current
 
     return () => {
