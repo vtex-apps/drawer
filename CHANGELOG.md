@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Lint build errors on pipe
+
 ## [0.18.2] - 2025-02-28
 
 ### Changed

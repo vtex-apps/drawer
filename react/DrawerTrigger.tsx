@@ -1,6 +1,5 @@
-import React, { FC } from 'react'
-import { usePixel } from 'vtex.pixel-manager'
-import type { PixelEventTypes } from 'vtex.pixel-manager'
+import React from 'react'
+import { usePixel, PixelEventTypes } from 'vtex.pixel-manager'
 import { useCssHandles } from 'vtex.css-handles'
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 
 const CSS_HANDLES = ['drawerTriggerContainer'] as const
 
-const DrawerTrigger: FC<Props> = ({ children, customPixelEventId }) => {
+const DrawerTrigger: React.FC<Props> = ({ children, customPixelEventId }) => {
   const { push } = usePixel()
   const handles = useCssHandles(CSS_HANDLES)
 

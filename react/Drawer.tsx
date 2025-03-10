@@ -10,8 +10,7 @@ import { defineMessages } from 'react-intl'
 import { IconMenu } from 'vtex.store-icons'
 import { useCssHandles } from 'vtex.css-handles'
 import { useChildBlock, ExtensionPoint } from 'vtex.render-runtime'
-import { usePixelEventCallback } from 'vtex.pixel-manager'
-import type { PixelEventTypes } from 'vtex.pixel-manager'
+import { usePixelEventCallback, PixelEventTypes } from 'vtex.pixel-manager'
 import {
   MaybeResponsiveValue,
   useResponsiveValue,
@@ -75,11 +74,13 @@ function menuReducer(state: MenuState, action: MenuAction) {
         isOpen: true,
         hasBeenOpened: true,
       }
+
     case 'close':
       return {
         ...state,
         isOpen: false,
       }
+
     default:
       return state
   }
@@ -131,6 +132,7 @@ function Drawer(props: Props) {
     onVisibilityChanged,
     zIndex = 999,
   } = props
+
   const handles = useCssHandles(CSS_HANDLES)
   const backdropMode = useResponsiveValue(backdropModeProp)
   const hasTriggerBlock = Boolean(useChildBlock({ id: 'drawer-trigger' }))
@@ -140,6 +142,7 @@ function Drawer(props: Props) {
   const [shouldRenderChildren, setShouldRenderChildren] = useState(
     renderingStrategy === 'eager'
   )
+
   const [isMoving, setIsMoving] = useState(false)
 
   // Always add the listener for 'openDrawer' events, since they're sent by
@@ -239,9 +242,11 @@ function Drawer(props: Props) {
             onUpdateOffset={value => {
               setIsMoving(!(value === '0%' || value === '-100%'))
             }}
-            className={`${handles.drawer} ${isMenuOpen ? handles.opened : handles.closed
-              } ${isMoving ? handles.moving : ''} ${direction === 'right' ? 'right-0' : 'left-0'
-              } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
+            className={`${handles.drawer} ${
+              isMenuOpen ? handles.opened : handles.closed
+            } ${isMoving ? handles.moving : ''} ${
+              direction === 'right' ? 'right-0' : 'left-0'
+            } fixed top-0 bottom-0 bg-base z-999 flex flex-column`}
             style={{
               width: width ?? (isFullWidth ? '100%' : '85%'),
               maxWidth,
