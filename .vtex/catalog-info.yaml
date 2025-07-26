@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: drawer
+  description: The Drawer component is a sliding panel that displays additional
+    options and menus when expanded. It is typically used in mobile layouts and
+    responsive web designs where screen space is limited.
+  tags:
+    - typescript
+    - react:16
+  annotations:
+    vtex.com/janus-acronym: ""
+    vtex.com/o11y-os-index: ""
+    grafana/dashboard-selector: ""
+    github.com/project-slug: vtex-apps/drawer
+    vtex.com/platform-flow-id: ""
+    backstage.io/techdocs-ref: dir:../
+    vtex.com/application-id: LOMA3QRW
+spec:
+  system: store-framework-ui-apps
+  lifecycle: stable
+  owner: te-0013
+  type: frontend-ui
+  dependsOn: []
+  subcomponentOf: store-framework
