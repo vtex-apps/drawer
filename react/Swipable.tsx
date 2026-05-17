@@ -73,10 +73,10 @@ export default class Swipable extends React.Component<Props> {
     rightTargetPosition: null,
     onTriggerChange: null,
     position: CENTER,
-    onLockScroll: () => {},
-    onUnlockScroll: () => {},
-    onDragStart: () => {},
-    onDragEnd: () => {},
+    onLockScroll: () => { },
+    onUnlockScroll: () => { },
+    onDragStart: () => { },
+    onDragEnd: () => { },
     onSetPosition: ({
       element,
       offset,
@@ -88,7 +88,7 @@ export default class Swipable extends React.Component<Props> {
 
       element.style.transform = `translate3d(${offset}${unit},0,0)`
     },
-    onUpdateOffset: () => {},
+    onUpdateOffset: () => { },
     element: null,
     threshold: 0,
     enabled: true,
@@ -105,7 +105,7 @@ export default class Swipable extends React.Component<Props> {
 
     this.dragContainer = React.createRef()
 
-    this.stopAnimation = () => {}
+    this.stopAnimation = () => { }
     this.isPointerDown = false
     this.isDragging = false
     this.isScrolling = false
@@ -485,6 +485,10 @@ export default class Swipable extends React.Component<Props> {
     return (
       <div
         aria-hidden={this.props.enabled ? 'false' : 'true'}
+        aria-label={this.props.enabled ? 'close drawer' : 'open drawer'}
+        tabIndex={this.props.enabled ? 0 : -1}
+        aria-expanded={this.props.enabled}
+
         ref={this.dragContainer}
         style={{
           ...this.props.style,
